@@ -3,11 +3,11 @@ import Header from "./Header";
 import { validate } from "../utils/validate";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from 'react-router-dom'
 import { addUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
+import { USER_AVATER } from "../utils/constants";
 
-
+ 
 const Login = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -15,38 +15,51 @@ const Login = () => {
     const nameRef = useRef(null);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleSubmit = async () => { 
+    const handleSubmit = async () => {
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-
+    
         const message = validate(email, password);
-        setErrorMessage(message);
-        if (message) return;
- 
+        if (message) {
+            setErrorMessage(message);
+            return;
+        }
+    
         try {
             if (isSignUp) {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 console.log("User signed up:", userCredential.user);
+    
+                const defaultAvatar = USER_AVATER || "https://example.com/default-avatar.png";
                 await updateProfile(userCredential.user, {
                     displayName: nameRef.current.value,
-                    photoURL: "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    photoURL: defaultAvatar,
                 });
-                const {uid,email,displayName,photoURL} = auth.currentUser;
-                dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL}));
-                navigate("/browse");
+    
+                // Destructure from userCredential.user
+                const { uid, email: userEmail, displayName, photoURL } = userCredential.user;
+    
+                // Dispatch the user information
+                dispatch(addUser({ uid, email: userEmail, displayName, photoURL }));
             } else {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 console.log("User signed in:", userCredential.user);
-                navigate("/browse");
-
+    
+                // Handle signed-in user if needed
             }
         } catch (error) {
-            setErrorMessage(`Error: ${error.message}`);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+            const errorMessages = {
+                "auth/email-already-in-use": "This email is already in use.",
+                "auth/invalid-email": "Invalid email format.",
+                "auth/user-not-found": "No user found with this email.",
+                "auth/wrong-password": "Incorrect password.",
+            };
+            setErrorMessage(errorMessages[error.code] || "An unexpected error occurred. Please try again.");
         }
-    };                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    };
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
     const toggleSignUp = () => {
         setIsSignUp(!isSignUp);
