@@ -5,18 +5,18 @@ import { addTrailerVideos } from '../utils/movieSlice';
 
 const useMovieTrailer = (id) => {
     const dispatch = useDispatch();
-    const getTrailer = async () =>{
-        const data = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos`, API_OPTION);
-        const json = await data.json();
-        const trailerData = json.results.filter((video)=>video.type === "Trailer");
-        const trailer = trailerData[0];
-        console.log(trailer);
-     dispatch(addTrailerVideos(trailer));
-    }
+        const getTrailer = async () =>{
+            const data = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos`, API_OPTION);
+            const json = await data.json();
+            const trailerData = json.results.filter((video)=>video.type === "Trailer");
+            const trailer = trailerData[0];
+            console.log(trailer);
+        dispatch(addTrailerVideos(trailer));
+        }
+
     useEffect(()=>{
         getTrailer();
     },[])
-getTrailer();
   return (
     <div>
       
@@ -24,4 +24,4 @@ getTrailer();
   )
 }
 
-export default useMovieTrailer
+export default useMovieTrailer;
