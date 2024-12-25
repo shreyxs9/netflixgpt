@@ -34,7 +34,7 @@ const Header = () => {
 
   return (
     <div className='flex w-screen bg-gradient-to-t from-black'>
-      <div className="fixed flex top-0 left-0 w-full z-20 p-4 justify-between items-center">
+      <div className="fixed flex top-0 left-0 w-full z-20 p-4 pt-0 justify-between items-center">
         <img 
           src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png" 
           alt="Netflix Logo" 
