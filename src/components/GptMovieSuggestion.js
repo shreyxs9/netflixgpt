@@ -6,7 +6,6 @@ const GptMovieSuggestion = () => {
   const movies = useSelector((store)=> store.gpt.gptMovies)
   return (
     <div>
-
         <MovieList title="Recommended Movies" movies={movies} />
 
     </div>
