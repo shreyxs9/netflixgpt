@@ -67,7 +67,7 @@ const GptSearchBar = () => {
 
   return (
     <div>
-      <div className="p-[10%] flex justify-center">
+      <div className="pt-[35%] sm:pt-[15%] flex justify-center ">
         <div className="absolute inset-0 -z-10">
           <img
             src="https://assets.nflxext.com/ffe/siteui/vlv3/151f3e1e-b2c9-4626-afcd-6b39d0b2694f/web/IN-en-20241028-TRIFECTA-perspective_bce9a321-39cb-4cce-8ba6-02dab4c72e53_large.jpg"
@@ -75,16 +75,16 @@ const GptSearchBar = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <form className="grid grid-cols-12" onSubmit={handleGptSearch}>
+        <form className="grid grid-cols-12 w-2/3 sm:1/2 " onSubmit={handleGptSearch}>
           <input
             type="text"
             placeholder={lang[lan]?.placeholder || 'Enter your search here...'}
-            className="col-span-10 bg-black text-white rounded-lg p-4"
+            className="col-span-9 sm:col-span-10 bg-black text-white rounded-lg  p-3 sm:p-5"
             ref={searchText}
             aria-label="Search input"
           />
           <button
-            className="bg-red-600 px-6 py-3 ml-2 col-span-2 rounded-lg"
+            className="bg-red-600 pr-14 sm:pr-0 p-2 sm:p-4 ml-1 sm:ml-2 col-span-3 sm:col-span-2 rounded-xl"
             type="submit"
             disabled={loading}
           >

@@ -80,7 +80,7 @@ const Login = () => {
                     e.preventDefault();
                     handleSubmit();
                 }}
-                className="relative z-10 w-3/12 bg-stone-900 bg-opacity-80 text-white p-12 py-16 rounded-lg flex flex-col items-center"
+                className="relative z-10 w-full md:w-3/12 bg-stone-900 bg-opacity-80 text-white p-12 py-8 md:py-16 rounded-lg flex flex-col items-center"
             >
                 <h2 className="text-3xl px-4 pb-4">{isSignUp ? "Sign Up" : "Sign In"}</h2>
                 {isSignUp && (
