@@ -12,11 +12,15 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: [
+        process.env.FRONTEND_URL || 'http://localhost:3000',
+        'https://netflixgpt-5149eqwerty.firebaseapp.com' // Adding the NetflixGPT Firebase site
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
+
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "script-src 'self' 'unsafe-eval' blob:;");
     next();
